@@ -98,28 +98,29 @@ export function setPosition ({ el, anchorEl, anchorOrigin, selfOrigin, offset, a
     props = {
       top: anchorProps[anchorOrigin.vertical] - targetProps[selfOrigin.vertical],
       left: anchorProps[anchorOrigin.horizontal] - targetProps[selfOrigin.horizontal]
-    }
+    },
+    { innerHeight, innerWidth } = window
 
   applyBoundaries(props, anchorProps, targetProps, anchorOrigin, selfOrigin)
 
   if (props.top >= anchorProps.top) {
-    el.style.top = Math.max(0, props.top) + 'px'
+    el.style.top = Math.max(0, props.top / innerHeight * 100) + 'vh'
     el.style.bottom = 'auto'
   }
   else {
     const offset = props.maxHeight === void 0 ? targetProps.bottom : Math.min(targetProps.bottom, props.maxHeight)
     el.style.top = 'auto'
-    el.style.bottom = `calc(100% - ${Math.max(0, props.top + offset)}px)`
+    el.style.bottom = `${(1 - Math.max(0, (props.top + offset) / innerHeight)) * 100}vh`
   }
 
   if (props.left >= anchorProps.left) {
-    el.style.left = Math.max(0, props.left) + 'px'
+    el.style.left = Math.max(0, props.left / innerWidth * 100) + 'vw'
     el.style.right = 'auto'
   }
   else {
     const offset = props.maxWidth === void 0 ? targetProps.right : Math.min(targetProps.right, props.maxWidth)
     el.style.left = 'auto'
-    el.style.right = `calc(100% - ${Math.max(0, props.left + offset)}px)`
+    el.style.right = `${(1 - Math.max(0, (props.left + offset) / innerWidth)) * 100}vw`
   }
 
   if (props.maxHeight !== void 0) {

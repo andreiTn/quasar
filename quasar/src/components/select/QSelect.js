@@ -374,6 +374,12 @@ export default Vue.extend({
     },
 
     __onTargetKeydown (e) {
+      // enter
+      if (e.keyCode === 13) {
+        stopAndPrevent(e)
+        return
+      }
+
       // tab
       if (e.keyCode === 9) {
         this.__setMenuStatus(false)
@@ -475,6 +481,12 @@ export default Vue.extend({
     },
 
     __onGlobalKeydown (e) {
+      // enter
+      if (e.keyCode === 13) {
+        stopAndPrevent(e)
+        return
+      }
+
       // up, down
       if (e.keyCode === 38 || e.keyCode === 40) {
         stopAndPrevent(e)
